@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="title"
+    content="Proactive Local-Minima-Free Robot Navigation: Blending Motion Prediction with Safe Control">
+  <meta name="description"
+    content="MMP-MCBF integrates multimodal motion prediction, online Gaussian Process Distance Fields, and adaptive Modulated Control Barrier Functions for proactive, safe, and efficient robot navigation in dynamic environments.">
+  <meta name="keywords"
+    content="robot navigation, motion prediction, control barrier functions, MCBF-QP, dynamic obstacles, collision avoidance, Gaussian Process Distance Fields, mobile robots">
+  <meta name="language" content="English">
+  <meta name="theme-color" content="#2563eb">
+
+  <meta name="citation_title"
+    content="Proactive Local-Minima-Free Robot Navigation: Blending Motion Prediction with Safe Control">
+  <meta name="citation_author" content="Yifan Xue, Ze Zhang, Knut Åkesson, and Nadia Figueroa">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="IEEE Robotics and Automation Letters (RA-L)">
+
+  <title>Proactive Local-Minima-Free Robot Navigation: Blending Motion Prediction with Safe Control</title>
+
+  <link rel="icon" type="image/svg+xml" href="static/images/logo.ico">
+  <link rel="apple-touch-icon" href="static/images/logo.ico">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+
+<body>
+
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <div class="more-works-container">
+    <button class="more-works-btn" onclick="toggleMoreWorks()" title="View More Works">
+      <i class="fas fa-flask"></i>
+      More Works
+      <i class="fas fa-chevron-down dropdown-arrow"></i>
+    </button>
+    <div class="more-works-dropdown" id="moreWorksDropdown">
+      <div class="dropdown-header">
+        <h4>Related Works</h4>
+        <button class="close-btn" onclick="toggleMoreWorks()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="works-list">
+
+        <a href="https://yifanxueseas.github.io/mcbf_web/" class="work-item" target="_blank" rel="noopener">
+          <div class="work-info">
+            <h5>No Undesirable Equilibria, No Collisions: Combining Modulation and Control
+              Barrier Functions for Liveness and Safety in Dynamic Collision Avoidance</h5>
+            <p>
+              This work establishes theoretical connections between Modulation of Dynamical Systems and Control Barrier
+              Function Quadratic Programs, and proposes Modulated CBF-QP methods for safe obstacle avoidance with
+              liveness guarantees in static and dynamic environments with obstacles of arbitrary geometry.
+            </p>
+            <span class="work-venue">Under Review</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+
+        <a href="https://ieeexplore.ieee.org/abstract/document/11128869" class="work-item" target="_blank"
+          rel="noopener">
+          <div class="work-info">
+            <h5>ADMM-MCBF-LCA: A Layered Control Architecture for Safe Real-Time Navigation</h5>
+            <p>
+              A layered control architecture for safe real-time navigation among moving obstacles under input saturation
+              constraints, combining offline path generation with online path selection and safety-ensured and
+              liveness-enhanced control based on modulated control barrier functions (CBFs) to mitigate infeasibility
+              during collision avoidance.
+            </p>
+            <span class="work-venue">IEEE International Conference on Robotics and Automation (ICRA) 2025</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+
+        <a href="https://yifanxueseas.github.io/memory-aware-multi-sensory-navigation-web/" class="work-item"
+          target="_blank" rel="noopener">
+          <div class="work-info">
+            <h5>Memory-Aware Multi-Sensor Perception for Efficient and Safe Navigation in Dynamic Environments</h5>
+            <p>
+              Existing perception-based methods often rely on prior maps or short-horizon observations, limiting their
+              ability to exploit previously observed structure and compromising liveness and goal convergence. These
+              limitations motivate a memory-aware navigation framework that builds a persistent environment
+              representation online and leverages it for liveness-aware collision avoidance without requiring an offline
+              map.
+            </p>
+            <span class="work-venue">Under Review</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+
+        <a href="https://arxiv.org/abs/2311.02576" class="work-item" target="_blank" rel="noopener">
+          <div class="work-info">
+            <h5>Towards Feasible Dynamic Grasping: Leveraging Gaussian Process Distance Field,
+              SE(3) Equivariance and Riemannian Mixture Models</h5>
+            <p>
+              A Gaussian Process Distance Field-based framework for dynamic grasping that
+              combines shape reconstruction, equivariant grasp sampling, and reachability-aware
+              pose selection.
+            </p>
+            <span class="work-venue">IEEE International Conference on Robotics and Automation (ICRA) 2024</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+
+              <h1 class="title is-1 publication-title">
+                Proactive Local-Minima-Free Robot Navigation: Blending Motion Prediction with Safe Control
+              </h1>
+
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">
+                  Yifan Xue, Ze Zhang, Knut Åkesson, and Nadia Figueroa
+                </span>
+              </div>
+
+              <div class="is-size-6 publication-authors" style="margin-top:0.35rem;">
+                <span class="author-block">
+                  IEEE Robotics and Automation Letters (RA-L), 2026
+                </span>
+              </div>
+
+              <div class="column has-text-centered">
+                <div class="publication-links">
+
+                  <span class="link-block">
+                    <a href="https://arxiv.org/abs/2601.10233" class="external-link button is-normal is-rounded is-dark"
+                      target="_blank" rel="noopener">
+                      <span class="icon"><i class="ai ai-arxiv"></i></span>
+                      <span>ArXiv</span>
+                    </a>
+                  </span>
+
+                  <span class="link-block">
+                    <a href="#demo" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon"><i class="fas fa-play"></i></span>
+                      <span>Video</span>
+                    </a>
+                  </span>
+
+                  <span class="link-block">
+                    <a href="https://github.com/yifanxueseas/mmp_mcbf_control"
+                      class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener">
+                      <span class="icon"><i class="fab fa-github"></i></span>
+                      <span>Code</span>
+                    </a>
+                  </span>
+
+                  <span class="link-block">
+                    <a href="#bibtex" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon"><i class="fas fa-quote-right"></i></span>
+                      <span>BibTeX</span>
+                    </a>
+                  </span>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Teaser -->
+    <section class="hero teaser">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+
+          <figure class="has-text-centered">
+            <img src="static/images/concept3.png" alt="General pipeline of the MMP-MCBF framework" loading="lazy"
+              class="paper-figure"
+              style="width:100%; max-width:960px; max-height:520px; height:auto; object-fit:contain;">
+            <figcaption class="figure-caption">
+              <strong>Figure 1.</strong>
+              General pipeline of the proposed MMP-MCBF approach. Motion predictions of dynamic
+              obstacles are converted into barrier functions through online Gaussian Process
+              Distance Field learning, which are then used by the adaptive MCBF controller to
+              generate safe and efficient control actions.
+            </figcaption>
+          </figure>
+
+          <div class="has-text-centered" style="margin-top:1.25rem;" id="demo">
+            <video controls playsinline preload="metadata"
+              style="width:100%; max-width:960px; border-radius:8px; background:#111;">
+              <source src="static/videos/teaser.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="figure-caption" style="margin-top:0.75rem;">
+              <strong>Video.</strong>
+              Demonstration of proactive dynamic-obstacle avoidance using motion prediction and
+              adaptive MCBF-QP control.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- TOC -->
+    <div class="container is-max-desktop">
+      <div class="toc-box" id="table-of-contents">
+        <h2 class="title is-4">Table of Contents</h2>
+        <ul>
+          <li><a href="#demo">Demo Video</a></li>
+          <li><a href="#abstract">Abstract</a></li>
+          <li><a href="#contributions">Contributions</a></li>
+          <li><a href="#method">Method Overview</a></li>
+          <li><a href="#prediction">Motion Prediction &amp; Barrier Learning</a></li>
+          <li><a href="#mcbf">Adaptive MCBF</a></li>
+          <li><a href="#simulation">Experiments</a></li>
+          <li><a href="#results">Results</a></li>
+          <li><a href="#hardware">Real-World Experiments</a></li>
+          <li><a href="#bibtex">BibTeX</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Abstract -->
+    <section class="section" id="abstract">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            This work addresses the challenge of safe and efficient mobile robot navigation in
+            complex dynamic environments with concave moving obstacles. Reactive safe controllers
+            such as Control Barrier Functions (CBFs) design obstacle avoidance strategies based
+            only on the current states of obstacles, risking future collisions. To alleviate this
+            problem, we use Gaussian processes to learn barrier functions online from multimodal
+            motion predictions of obstacles generated by neural networks trained with energy-based
+            learning. The learned barrier functions are then fed into quadratic programs using
+            Modulated CBFs (MCBFs), a local-minimum-free version of CBFs, to achieve safe and
+            efficient navigation. The proposed framework develops a prediction-to-barrier-function
+            online learning pipeline and an autonomous parameter tuning algorithm that adapts MCBFs
+            to deforming, prediction-based barrier functions. The framework is evaluated in both
+            simulations and real-world experiments, demonstrating safe and efficient navigation in
+            crowded dynamic environments.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contributions -->
+    <section class="section subtle-gray" id="contributions">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3">Contributions</h2>
+        <div class="content">
+          <ol>
+            <li>
+              We develop an online prediction-to-barrier-function pipeline that converts
+              predicted future obstacle occupancy into virtual obstacle representations and
+              continuously learns corresponding distance fields using Gaussian Processes.
+            </li>
+            <li>
+              We introduce an adaptive MCBF-QP formulation that combines motion-prediction-based
+              safety constraints with geodesic obstacle-exit guidance for proactive navigation
+              around deforming and non-convex unsafe regions.
+            </li>
+            <li>
+              We propose an autonomous parameter-selection method for geodesic approximation that
+              adapts the wrapping step size to the estimated geodesic distance, reducing
+              over-wrapping and under-wrapping as predicted obstacle regions deform.
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Method -->
+    <section class="section" id="method">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3">Method Overview</h2>
+        <div class="content has-text-justified">
+          <p>
+            The proposed Multimodal Motion Prediction–Modulated Control Barrier Function
+            (MMP-MCBF) framework combines motion prediction with safe reactive control. Predicted
+            future motion is first converted into an Estimated Forward Reachable Set (EFRS), which
+            represents regions that a dynamic obstacle may occupy. These predicted regions are
+            transformed into virtual distance fields using online Gaussian Process Distance Fields
+            (GPDFs), and the resulting distance functions are incorporated into Control Barrier
+            Functions. The adaptive MCBF-QP then uses the combined barrier representation to
+            generate obstacle-circumventing control actions while maintaining safety.
+          </p>
+
+          <ul>
+            <li>
+              <strong>Prediction:</strong> Constant Velocity Models (CVMs) and learning-based
+              Energy-Based Models (EBMs) generate future obstacle motion.
+            </li>
+            <li>
+              <strong>Barrier learning:</strong> Predicted occupancy is converted into EFRSs and
+              continuously represented using online GPDFs.
+            </li>
+            <li>
+              <strong>Control:</strong> Adaptive on-manifold MCBF-QP combines safety constraints
+              with geodesic obstacle-exit guidance.
+            </li>
+          </ul>
+        </div>
+
+        <figure class="has-text-centered" style="margin-top:1.5rem;">
+          <img src="static/images/mcbf_traj.png" alt="Comparison between MCBF and standard CBF navigation"
+            loading="lazy" class="paper-figure"
+            style="width:100%; max-width:900px; max-height:520px; height:auto; object-fit:contain;">
+          <figcaption class="figure-caption">
+            <strong>Figure 2.</strong>
+            Modulated CBF versus standard CBF. The tangent guidance introduced by MCBF provides
+            an obstacle-exit direction that helps avoid local minima around concave obstacles.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Prediction -->
+    <section class="section subtle-gray" id="prediction">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3">Motion Prediction &amp; Barrier Learning</h2>
+        <div class="content has-text-justified">
+
+          <h4 class="title is-5">Estimated Forward Reachable Sets</h4>
+          <p>
+            The motion predictor produces future obstacle states that are converted into a unified
+            Estimated Forward Reachable Set (EFRS). The EFRS captures possible future occupied
+            regions rather than only the obstacle's current geometry, allowing the controller to
+            react before a predicted motion blocks a feasible passage.
+          </p>
+
+          <h4 class="title is-5">Multimodal Motion Prediction</h4>
+          <p>
+            Two prediction models are considered. The Constant Velocity Model (CVM) generates
+            future trajectories from the current and past motion of an obstacle. The learning-based
+            Energy-Based Model (EBM) produces multimodal probability maps of future obstacle
+            positions over multiple time steps, using obstacle history together with a bird's-eye
+            view environmental map.
+          </p>
+
+          <h4 class="title is-5">Online GPDF Learning</h4>
+          <p>
+            Predicted obstacle regions are converted to boundary representations and fed into
+            Gaussian Process Distance Fields. The resulting continuous distance and gradient fields
+            provide the barrier functions used by the MCBF-QP. For EBM predictions, probability
+            maps across the prediction horizon are accumulated, thresholded, and converted into
+            obstacle contours before online GPDF learning.
+          </p>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Adaptive MCBF -->
+    <section class="section" id="mcbf">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3">Adaptive MCBF</h2>
+        <div class="content has-text-justified">
+
+          <p>
+            Standard MCBF-QP provides tangent guidance for circumventing concave obstacles, but
+            dynamic predicted obstacle regions can deform substantially as motion predictions are
+            updated. In addition, the shortest exit direction around an individual obstacle may not
+            remain appropriate when multiple predicted and physical obstacles overlap. The proposed
+            method therefore uses a combined barrier representation and adapts the geodesic
+            approximation online.
+          </p>
+
+          <h4 class="title is-5">Generalized Geodesic Approximation</h4>
+          <p>
+            When predicted reachable regions overlap with nearby physical obstacles, the exit
+            direction is computed from a combined barrier function representing the local obstacle
+            union. This enables the controller to circumvent concave regions formed by multiple
+            dynamic obstacles, or by dynamic obstacles together with static infrastructure.
+          </p>
+
+          <h4 class="title is-5">Autonomous Parameter Selection</h4>
+          <p>
+            Fixed geodesic-approximation parameters can cause over-wrapping or under-wrapping when
+            predicted obstacle regions expand or shrink. The proposed parameter-selection algorithm
+            estimates the geodesic distance along the relevant obstacle isosurface and selects the
+            step size according to the relationship
+            <em>&beta;N &asymp; d<sub>geo</sub></em>.
+            The iteration count is kept fixed to enable efficient JIT compilation, while the step
+            size is updated online as the predicted unsafe region changes.
+          </p>
+
+        </div>
+
+        <figure class="has-text-centered" style="margin-top:1.5rem;">
+          <img src="static/images/wrapping_demo_ext.png"
+            alt="Comparison of constant and adaptive geodesic approximation parameters" loading="lazy"
+            class="paper-figure"
+            style="width:100%; max-width:1000px; max-height:620px; height:auto; object-fit:contain;">
+          <figcaption class="figure-caption">
+            <strong>Figure 3.</strong>
+            Comparison of geodesic approximation with fixed versus autonomously selected step
+            sizes for deforming predicted obstacle regions.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Experiments -->
+    <section class="section subtle-gray" id="simulation">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3">Experiments</h2>
+        <div class="content has-text-justified">
+          <p>
+            The framework is evaluated on a differential-drive Fetch robot using kinematic
+            simulations, Gazebo simulations, and real-world experiments. Four scenarios cover
+            hospital and crowd-navigation tasks. The robot starts from multiple initial
+            orientations and is evaluated in terms of safety, target-reaching success,
+            optimization feasibility, and travel time.
+          </p>
+
+          <p>
+            The evaluation compares MPPI, CBF-QP, MCBF-QP, MMP-MPC, MMP-MPPI, MMP-CBF, and the
+            proposed MMP-MCBF. Motion prediction is provided by the EBM in the hospital scenarios
+            and by the CVM in the crowd-navigation and real-world experiments.
+          </p>
+        </div>
+
+        <figure class="has-text-centered" style="margin-top:1.25rem;">
+          <img src="static/images/sim_env.png" alt="Hospital and crowd simulation environments" loading="lazy"
+            class="paper-figure"
+            style="width:100%; max-width:1000px; max-height:520px; height:auto; object-fit:contain;">
+          <figcaption class="figure-caption">
+            <strong>Figure 4.</strong>
+            Hospital and crowd simulation environments used for comparison experiments.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="section" id="results">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3">Results</h2>
+
+        <p class="has-text-justified" style="margin-bottom:1.25rem;">
+          The proposed MMP-MCBF combines motion prediction with the local-minimum-free guidance of
+          MCBF-QP. Across the evaluated hospital and social-navigation scenarios, it maintains
+          collision-free performance while achieving high target-reaching success and competitive
+          execution time. The results also show the benefit of combining prediction with
+          obstacle-exit guidance rather than using prediction alone.
+        </p>
+
+        <div style="overflow-x:auto;">
+          <table class="results-table" aria-label="Experimental comparison">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Runtime Mean (s)</th>
+                <th>Runtime Std (s)</th>
+                <th>Safety #</th>
+                <th>Success #</th>
+                <th>Infeasibility #</th>
+                <th>Timespan (s)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>MPPI</td>
+                <td>0.028</td>
+                <td>0.011</td>
+                <td>10 / 10 / 0 / 10</td>
+                <td>0 / 0 / 9 / 10</td>
+                <td>0 / 0 / 0 / 0</td>
+                <td>-- / -- / 18.4 / 23.7</td>
+              </tr>
+              <tr>
+                <td>CBF</td>
+                <td>0.010</td>
+                <td>0.009</td>
+                <td>10 / 10 / 10 / 2</td>
+                <td>0 / 10 / 9 / 10</td>
+                <td>0 / 1 / 0 / 69</td>
+                <td>-- / 28.9 / 25.0 / 16.3</td>
+              </tr>
+              <tr>
+                <td>MCBF</td>
+                <td>0.018</td>
+                <td>0.009</td>
+                <td>2 / 5 / 4 / 0</td>
+                <td>10 / 4 / 10 / 10</td>
+                <td>59 / 426 / 42 / 122</td>
+                <td>25.0 / 19.3 / 13.2 / 13.4</td>
+              </tr>
+              <tr>
+                <td>MMP-MPC</td>
+                <td>0.066</td>
+                <td>0.046</td>
+                <td>3 / 0 / 0 / 0</td>
+                <td>0 / 1 / 6 / 4</td>
+                <td>0 / 0 / 0 / 0</td>
+                <td>-- / 33.6 / 12.5 / 14.2</td>
+              </tr>
+              <tr>
+                <td>MMP-MPPI</td>
+                <td>0.045</td>
+                <td>0.005</td>
+                <td>10 / 10 / 10 / 10</td>
+                <td>0 / 0 / 10 / 10</td>
+                <td>0 / 0 / 0 / 0</td>
+                <td>-- / -- / 16.1 / 22.5</td>
+              </tr>
+              <tr>
+                <td>MMP-CBF</td>
+                <td>0.010</td>
+                <td>0.007</td>
+                <td>10 / 10 / 1 / 10</td>
+                <td>1 / 5 / 9 / 10</td>
+                <td>0 / 317 / 77 / 0</td>
+                <td>26.1 / 34.0 / 12.9 / 9.8</td>
+              </tr>
+              <tr class="ours">
+                <td>MMP-MCBF (Ours)</td>
+                <td>0.036</td>
+                <td>0.018</td>
+                <td>10 / 10 / 10 / 10</td>
+                <td>10 / 10 / 10 / 10</td>
+                <td>10 / 0 / 0 / 0</td>
+                <td>31.0 / 19.3 / 15.5 / 9.6</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="is-size-7 has-text-grey" style="margin-top:0.75rem;">
+          Values are reported for Scenarios 1 / 2 / 3 / 4. Safety and success are counts out of
+          ten runs per scenario; infeasibility is the number of time steps in which the solver
+          fails to find a safety-feasible solution.
+        </p>
+
+        <div class="columns is-multiline is-variable is-4" style="margin-top:1.5rem;">
+          <div class="column is-4-desktop is-6-tablet">
+            <div class="results-card has-text-centered">
+              <div class="metric">10/10</div>
+              <div class="metric-label">Safety in all four scenarios</div>
+            </div>
+          </div>
+          <div class="column is-4-desktop is-6-tablet">
+            <div class="results-card has-text-centered">
+              <div class="metric">10/10</div>
+              <div class="metric-label">Goal-reaching success in all four scenarios</div>
+            </div>
+          </div>
+          <div class="column is-4-desktop is-6-tablet">
+            <div class="results-card has-text-centered">
+              <div class="metric">0.036 s</div>
+              <div class="metric-label">Mean runtime per control step</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hardware -->
+    <section class="section subtle-gray" id="hardware">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3">Real-World Experiments</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            The proposed framework is further evaluated in real-world crowd-navigation
+            experiments using a Fetch mobile robot. The experiments use a Constant Velocity Model
+            for motion prediction and evaluate navigation around multiple pedestrians moving toward
+            the robot in a U-shaped formation.
+          </p>
+          <p>
+            The real-world experiments reinforce the simulation results: incorporating predicted
+            future obstacle occupancy allows MMP-MCBF to begin obstacle circumvention proactively,
+            while the MCBF exit guidance helps reduce freezing compared with prediction-based MPC
+            and CBF approaches.
+          </p>
+        </div>
+
+        <figure style="margin-top:1.25rem;">
+          <div class="columns is-variable is-3 is-mobile is-multiline is-vcentered">
+
+            <div class="column is-3-tablet is-3-desktop">
+              <img src="static/images/fv_mpc_pred.png" alt="MPC with prediction in real-world experiment" loading="lazy"
+                class="paper-figure" style="width:100%; height:auto; object-fit:contain;">
+              <p class="is-size-7 has-text-centered">MPC, with prediction</p>
+            </div>
+
+            <div class="column is-3-tablet is-3-desktop">
+              <img src="static/images/fv_cbf_pred.png" alt="CBF with prediction in real-world experiment" loading="lazy"
+                class="paper-figure" style="width:100%; height:auto; object-fit:contain;">
+              <p class="is-size-7 has-text-centered">CBF, with prediction</p>
+            </div>
+
+            <div class="column is-3-tablet is-3-desktop">
+              <img src="static/images/fv_mcbf_nopred.png" alt="MCBF without prediction in real-world experiment"
+                loading="lazy" class="paper-figure" style="width:100%; height:auto; object-fit:contain;">
+              <p class="is-size-7 has-text-centered">MCBF, no prediction</p>
+            </div>
+
+            <div class="column is-3-tablet is-3-desktop">
+              <img src="static/images/fv_mcbf_pred.png" alt="MCBF with prediction in real-world experiment"
+                loading="lazy" class="paper-figure" style="width:100%; height:auto; object-fit:contain;">
+              <p class="is-size-7 has-text-centered">MCBF, with prediction</p>
+            </div>
+
+          </div>
+
+          <figcaption class="figure-caption has-text-centered">
+            <strong>Figure 5.</strong>
+            Real-world experiments in which a Fetch robot avoids three pedestrians approaching
+            in a U-shaped formation.
+          </figcaption>
+        </figure>
+
+        <p class="is-size-7 has-text-grey has-text-centered" style="margin-top:0.75rem;">
+          Real-world experimental clips are included in the <a href="#demo">demo video</a> above.
+        </p>
+      </div>
+    </section>
+
+    <!-- Discussion -->
+    <section class="section" id="discussion">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3">Discussion</h2>
+        <div class="content has-text-justified">
+          <p>
+            The prediction horizon introduces a trade-off between reactivity and conservativeness.
+            In the experiments, the prediction horizon is set to 4 seconds. Longer horizons can
+            shrink the safe region and increase solver infeasibility, whereas shorter horizons can
+            provide insufficient time for the robot to react to future obstacle motion.
+          </p>
+          <p>
+            The current formulation treats safety as a continuous-time deterministic optimization
+            problem and assumes access to sufficiently complete obstacle geometry once an obstacle
+            enters the detection range. Future extensions include stochastic formulations,
+            online adaptation of the prediction horizon, anomaly detection for long-term prediction
+            failures, and incremental construction of obstacle representations from partial
+            observations.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BibTeX -->
+    <section class="section subtle-gray" id="bibtex">
+      <div class="container is-max-desktop content">
+        <div class="bibtex-header">
+          <h2 class="title">BibTeX</h2>
+          <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard" type="button">
+            <i class="fas fa-copy"></i>
+            <span class="copy-text">Copy</span>
+          </button>
+        </div>
+        <pre id="bibtex-code"><code>@article{xue2026mmpmcbf,
+  title={Proactive Local-Minima-Free Robot Navigation: Blending Motion Prediction with Safe Control},
+  author={Xue, Yifan and Zhang, Ze and Åkesson, Knut and Figueroa, Nadia},
+  journal={IEEE Robotics and Automation Letters},
+  year={2026}
+}</code></pre>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              Built with a static academic layout inspired by the
+              <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank"
+                rel="noopener">Academic Project Page Template</a>
+              (adapted from
+              <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a>).
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
